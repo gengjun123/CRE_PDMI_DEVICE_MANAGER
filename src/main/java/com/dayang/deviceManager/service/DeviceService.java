@@ -79,10 +79,10 @@ public class DeviceService {
         return device;
     }
 
-    public Map<String, Object> getDevices(String name, String status, String borrowName, String borrowId, int start, int limit) {
+    public Map<String, Object> getDevices(String name, String status, String borrowerName, String borrowId, int start, int limit) {
         Map<String, Object> params = new HashMap<>();
         String hql = " from Device device";
-        if (StringUtils.isNotBlank(borrowName) || StringUtils.isNotBlank(borrowId)) {
+        if (StringUtils.isNotBlank(borrowerName) || StringUtils.isNotBlank(borrowId)) {
             hql += ", BorrowRecord record";
         }
 
@@ -96,9 +96,9 @@ public class DeviceService {
             hql += " and device.status = :status";
             params.put("status", status);
         }
-        if (StringUtils.isNotBlank(borrowName)) {
-            hql += " and record.borrowName like :borrowName";
-            params.put("borrowName", "%" + borrowName + "%");
+        if (StringUtils.isNotBlank(borrowerName)) {
+            hql += " and record.borrowerName like :borrowName";
+            params.put("borrowName", "%" + borrowerName + "%");
         }
         if (StringUtils.isNotBlank(borrowId)) {
             hql += " and record.borrowId = :borrowId";
