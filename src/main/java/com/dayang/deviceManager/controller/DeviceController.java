@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -52,10 +53,10 @@ public class DeviceController extends BaseController {
     public ResponseEntity<Object> getDevices(@RequestParam(required = false) String name,
                                              @RequestParam(required = false) String status,
                                              @RequestParam(required = false) String borrowerName,
-                                             @RequestParam(required = false) String borrowerId,
+                                             @RequestParam(name = "borrower", required = false) List<String> borrowerIdList,
                                              @RequestParam(required = false, defaultValue = "0") int start,
                                              @RequestParam(required = false, defaultValue = "10") int limit) {
-        Map<String, Object> result = deviceService.getDevices(name, status, borrowerName, borrowerId, start, limit);
+        Map<String, Object> result = deviceService.getDevices(name, status, borrowerName, borrowerIdList, start, limit);
         return ResponseEntity
                 .ok()
                 .body(result);

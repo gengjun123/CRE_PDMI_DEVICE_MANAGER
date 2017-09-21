@@ -79,14 +79,14 @@ public class DeviceService {
         return device;
     }
 
-    public Map<String, Object> getDevices(String name, String status, String borrowerName, String borrowId, int start, int limit) {
+    public Map<String, Object> getDevices(String name, String status, String borrowerName, List<String> borrowIdList, int start, int limit) {
         Map<String, Object> params = new HashMap<>();
         String hql = " from Device device";
-        if (StringUtils.isNotBlank(borrowerName) || StringUtils.isNotBlank(borrowId)) {
-            hql += ", BorrowRecord record";
+        if (StringUtils.isNotBlank(borrowerName) || (borrowIdList != null && borrowIdList.size() > 0)) {
+            hql += ", BorrowRecord record where device.id = record.deviceId";
+        } else {
+            hql += " where 1 = 1";
         }
-
-        hql += " where 1 = 1";
 
         if (StringUtils.isNotBlank(name)) {
             hql += " and device.name like :name";
@@ -100,9 +100,9 @@ public class DeviceService {
             hql += " and record.borrowerName like :borrowName";
             params.put("borrowName", "%" + borrowerName + "%");
         }
-        if (StringUtils.isNotBlank(borrowId)) {
-            hql += " and record.borrowId = :borrowId";
-            params.put("borrowId", borrowId);
+        if (borrowIdList != null && borrowIdList.size() > 0) {
+            hql += " and record.borrowerId in :borrowIdList";
+            params.put("borrowIdList", borrowIdList);
         }
 
         //查出设备记录
