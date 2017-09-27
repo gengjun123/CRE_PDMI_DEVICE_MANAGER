@@ -116,7 +116,7 @@ public class DeviceService {
         List<Device> deviceList = recordQuery.getResultList();
 
         //查询出总数
-        TypedQuery<Long> countQuery = dynamicQuery.executeHql("select count(device.id)" + hql, Long.class);
+        TypedQuery<Long> countQuery = dynamicQuery.executeHql("select count(distinct device.id)" + hql, Long.class);
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             countQuery.setParameter(entry.getKey(), entry.getValue());
         }
