@@ -54,9 +54,10 @@ public class DeviceController extends BaseController {
                                              @RequestParam(required = false) String status,
                                              @RequestParam(required = false) String borrowerName,
                                              @RequestParam(name = "borrower", required = false) List<String> borrowerIdList,
+                                             @RequestParam(name = "latestBorrowerId", required = false) List<String> latestBorrowerIdList,
                                              @RequestParam(required = false, defaultValue = "0") int start,
                                              @RequestParam(required = false, defaultValue = "10") int limit) {
-        Map<String, Object> result = deviceService.getDevices(name, status, borrowerName, borrowerIdList, start, limit);
+        Map<String, Object> result = deviceService.getDevices(name, status, borrowerName, borrowerIdList, latestBorrowerIdList, start, limit);
         return ResponseEntity
                 .ok()
                 .body(result);

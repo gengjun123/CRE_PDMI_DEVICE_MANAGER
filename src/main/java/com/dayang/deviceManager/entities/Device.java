@@ -29,6 +29,8 @@ public class Device {
 
     private Date importTime;
 
+    private String latestBorrowerId;
+
     @Transient
     private BorrowRecord latestBorrowRecord;
 
@@ -89,6 +91,14 @@ public class Device {
 
     public void setImportTime(Date importTime) {
         this.importTime = importTime;
+    }
+
+    public String getLatestBorrowerId() {
+        return latestBorrowerId;
+    }
+
+    public void setLatestBorrowerId(String latestBorrowerId) {
+        this.latestBorrowerId = latestBorrowerId;
     }
 
     public BorrowRecord getLatestBorrowRecord() {

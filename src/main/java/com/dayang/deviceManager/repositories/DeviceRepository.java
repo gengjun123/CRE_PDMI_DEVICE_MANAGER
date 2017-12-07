@@ -29,4 +29,11 @@ public interface DeviceRepository extends CrudRepository<Device, String>{
             " set d.status = :status" +
             " where d.id = :id")
     int updateStatus(@Param("id") String id, @Param("status") String status);
+
+    @Modifying
+    @Transactional
+    @Query("update Device d" +
+            " set d.latestBorrowerId = :latestBorrowerId" +
+            " where d.id = :id")
+    int updateLatestBorrowerId(@Param("id") String id, @Param("latestBorrowerId") String latestBorrowerId);
 }

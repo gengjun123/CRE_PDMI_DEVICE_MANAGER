@@ -25,6 +25,7 @@ public class BorrowRecordService {
         borrowRecord.setId(UUID.generate());
         borrowRecord.setDeviceId(deviceId);
         borrowRecord.setBorrowerName(recordObj.getString("borrowerName"));
+        borrowRecord.setBorrowerId(recordObj.getString("borrowerId"));
         borrowRecord.setBorrowTime(new Date(recordObj.getLong("borrowTime")));
         borrowRecord.setCreatedTime(new Date());
         if (recordObj.containsKey("borrowerPhone")) {
@@ -37,6 +38,8 @@ public class BorrowRecordService {
 
         //更新设备状态为借出
         deviceRepository.updateStatus(deviceId, Device.STATUS_BORROWED);
+        //更新设备的最新借出人id
+        deviceRepository.updateLatestBorrowerId(deviceId, borrowRecord.getBorrowerId());
         return borrowRecord.getId();
     }
 

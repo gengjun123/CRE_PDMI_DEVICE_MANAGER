@@ -79,7 +79,8 @@ public class DeviceService {
         return device;
     }
 
-    public Map<String, Object> getDevices(String name, String status, String borrowerName, List<String> borrowIdList, int start, int limit) {
+    public Map<String, Object> getDevices(String name, String status, String borrowerName, List<String> borrowIdList,
+                                          List<String> latestBorrowerIdList, int start, int limit) {
         Map<String, Object> params = new HashMap<>();
         String hql = " from Device device";
         if (StringUtils.isNotBlank(borrowerName) || (borrowIdList != null && borrowIdList.size() > 0)) {
@@ -103,6 +104,10 @@ public class DeviceService {
         if (borrowIdList != null && borrowIdList.size() > 0) {
             hql += " and record.borrowerId in :borrowIdList";
             params.put("borrowIdList", borrowIdList);
+        }
+        if (latestBorrowerIdList != null && latestBorrowerIdList.size() > 0) {
+            hql += " and device.latestBorrowerId in :latestBorrowerIdList";
+            params.put("latestBorrowerIdList", latestBorrowerIdList);
         }
 
         //查出设备记录
